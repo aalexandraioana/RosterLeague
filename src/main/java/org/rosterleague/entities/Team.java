@@ -32,17 +32,23 @@ public class Team implements Serializable {
     private String id;
     private String name;
     private String city;
+    private int points;
     private Collection<Player> players;
     private League league;
     
     /** Creates a new instance of Team */
     public Team() {
     }
-    
+
     public Team(String id, String name, String city) {
+        this(id, name, city, 0);
+    }
+    
+    public Team(String id, String name, String city, int points) {
         this.id = id;
         this.name = name;
         this.city = city;
+        this.points = points;
     }
 
     @Id
@@ -69,6 +75,10 @@ public class Team implements Serializable {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public int getPoints() { return points; }
+
+    public void setPoints(int points) { this.points = points; }
 
     @ManyToMany
     @JoinTable(
@@ -101,4 +111,6 @@ public class Team implements Serializable {
     public void dropPlayer(Player player) {
         this.getPlayers().remove(player);
     }
+
+    public void winPoints(int points) { this.points += points; }
 }

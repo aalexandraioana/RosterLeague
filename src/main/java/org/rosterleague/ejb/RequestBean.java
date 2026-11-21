@@ -147,7 +147,7 @@ public class RequestBean implements Request, Serializable {
         }
 
         for (Team team : teams) {
-            TeamDetails teamDetails = new TeamDetails(team.getId(), team.getName(), team.getCity());
+            TeamDetails teamDetails = new TeamDetails(team.getId(), team.getName(), team.getCity(), team.getPoints());
             detailsList.add(teamDetails);
         }
         return detailsList;
@@ -460,7 +460,7 @@ public class RequestBean implements Request, Serializable {
 
         try {
             Team team = em.find(Team.class, teamId);
-            teamDetails = new TeamDetails(team.getId(), team.getName(), team.getCity());
+            teamDetails = new TeamDetails(team.getId(), team.getName(), team.getCity(), team.getPoints());
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
@@ -524,5 +524,26 @@ public class RequestBean implements Request, Serializable {
             detailsList.add(playerDetails);
         }
         return detailsList;
+    }
+
+    @Override
+    public void awardPointsAfterGame(String firstTeamId, String secondTeamId, int firstTeamGoals, int secondTeamGoals)
+    {
+        logger.info("awardPointsAfterGame");
+        try {
+            Team firstTeam = em.find(Team.class, firstTeamId);
+            Team secondTeam = em.find(Team.class, secondTeamId);
+
+            if (firstTeamGoals > secondTeamGoals) {
+                firstTeam.winPoints(3);
+            } else if (firstTeamGoals == secondTeamGoals) {
+                firstTeam.winPoints(1);
+                secondTeam.winPoints(1);
+            } else {
+                secondTeam.winPoints(3);
+            }
+        } catch (Exception ex) {
+            throw new EJBException(ex);
+        }
     }
 }

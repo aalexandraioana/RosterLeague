@@ -27,6 +27,7 @@ public class MainServlet extends HttpServlet {
 
         getSomeInfo();
         getMoreInfo();
+        displayAwardedPoints();
         removeInfo();
     }
 
@@ -315,5 +316,25 @@ public class MainServlet extends HttpServlet {
             printer.println(details.toString());
         }
         printer.println();
+    }
+
+    private void displayAwardedPoints()
+    {
+        try {
+            printer.println("Displaying points: ");
+
+            ejbRequest.awardPointsAfterGame("T1", "T2", 3, 1);
+            ejbRequest.awardPointsAfterGame("T2", "T3", 0, 1);
+            ejbRequest.awardPointsAfterGame("T1", "T3", 1, 1);
+
+            printer.println("T1 Points: " + ejbRequest.getTeam("T1").getPoints());
+            printer.println("T2 Points: " + ejbRequest.getTeam("T2").getPoints());
+            printer.println("T3 Points: " + ejbRequest.getTeam("T3").getPoints());
+            printer.println();
+
+        } catch (Exception ex) {
+            printer.println("Caught an exception: " + ex.getClass() + " : " + ex.getMessage());
+            ex.printStackTrace(printer);
+        }
     }
 }

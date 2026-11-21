@@ -64,4 +64,8 @@ public interface Request {
     void removeTeam(String teamId);
 
     void clearAllEntities();
+
+    void awardPointsAfterGame(String firstTeamId, String secondTeamId, int firstTeamGoals, int secondTeamGoals);
 }
+
+

@@ -21,12 +21,18 @@ public class TeamDetails implements Serializable {
     private final String id;
     private final String name;
     private final String city;
+    private final int points;
 
     public TeamDetails(String id, String name, String city) {
+
+        this(id, name, city, 0);
+    }
+    public TeamDetails(String id, String name, String city, int points) {
 
         this.id = id;
         this.name = name;
         this.city = city;
+        this.points = points;
     }
 
     public String getId() {
@@ -41,9 +47,13 @@ public class TeamDetails implements Serializable {
         return city;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
     @Override
     public String toString() {
-        return id + " " + name + " " + city;
+        return id + " " + name + " " + city + " " + points;
     }
 
 }
